@@ -1,5 +1,6 @@
 package com.cat.msa.invoices.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Table(name = "T_INVOICE_DETAILS")
+@Entity
 public class InvoiceDetail {
 
     @Id
@@ -26,6 +28,7 @@ public class InvoiceDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="IND_INH_ID", nullable = false)
+    @JsonIgnore
     private InvoiceHeader invoiceHeader;
 
     public void calculateSubtotal(){
