@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
-@Table(name = "T_INVOICE_HEADER")
+@Table(name = "T_INVOICE_HEADERS")
+@Entity
 public class InvoiceHeader {
 
     @Id
@@ -25,7 +27,7 @@ public class InvoiceHeader {
     private String customerName;
 
     @Column(name = "INH_DATE", nullable = false)
-    private String date;
+    private LocalDateTime date;
 
     @Column(name = "INH_SUB_TOTAL", nullable = false)
     private BigDecimal subtotalAmount;
@@ -38,6 +40,13 @@ public class InvoiceHeader {
 
     @OneToMany( mappedBy="invoiceHeader", cascade = CascadeType.ALL)
     private List<InvoiceDetail> invoiceDetails;
+
+    public void calculateInvoiceAmount(){
+        calculateSubtotalAmount();
+        calculateVatAmount();
+        calculateTotalAmount();
+        addInvoiceDetail();
+    }
 
     public void calculateSubtotalAmount(){
         BigDecimal subtotalAmount = BigDecimal.ZERO;
@@ -54,5 +63,9 @@ public class InvoiceHeader {
         totalAmount = subtotalAmount.add(vatAmount);
     }
 
-
+    public void addInvoiceDetail(){
+        for(InvoiceDetail invoiceDetail: invoiceDetails){
+            invoiceDetail.setInvoiceHeader(this);
+        }
+    }
 }
