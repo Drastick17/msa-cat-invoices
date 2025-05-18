@@ -2,10 +2,7 @@ package com.cat.msa.invoices.controller.api;
 
 import com.cat.msa.invoices.domain.InvoiceHeader;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,5 +14,9 @@ public interface InvoiceHeaderApi {
 
     @GetMapping
     ResponseEntity<List<InvoiceHeader>> findAll();
+
+    @GetMapping("/{number}")
+    ResponseEntity<InvoiceHeader> findByNumber(@PathVariable String number);
+
 
 }
