@@ -32,4 +32,14 @@ public class InvoiceHeaderServiceImpl implements InvoiceHeaderService {
             return invoiceHeaders;
         }
     }
+
+    @Override
+    public InvoiceHeader findByNumber(String number) {
+        InvoiceHeader invoiceHeader = invoiceHeaderRepository.findByNumber(number);
+        if(invoiceHeader==null){
+            throw new NotContentException("Not content");
+        } else {
+            return invoiceHeader;
+        }
+    }
 }
