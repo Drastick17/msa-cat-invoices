@@ -18,5 +18,8 @@ public interface InvoiceHeaderApi {
     @GetMapping("/{number}")
     ResponseEntity<InvoiceHeader> findByNumber(@PathVariable String number);
 
+    @DeleteMapping("/{number}")
+    ResponseEntity<Void> deleteByNumber(@PathVariable String number);
+
 
 }
