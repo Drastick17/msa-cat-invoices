@@ -36,10 +36,16 @@ public class InvoiceHeaderServiceImpl implements InvoiceHeaderService {
     @Override
     public InvoiceHeader findByNumber(String number) {
         InvoiceHeader invoiceHeader = invoiceHeaderRepository.findByNumber(number);
-        if(invoiceHeader==null){
+        if(invoiceHeader == null){
             throw new NotContentException("Not content");
         } else {
             return invoiceHeader;
         }
+    }
+
+    @Override
+    public void deleteByNumber(String number) {
+        InvoiceHeader invoiceHeader = this.findByNumber(number);
+        invoiceHeaderRepository.delete(invoiceHeader);
     }
 }
