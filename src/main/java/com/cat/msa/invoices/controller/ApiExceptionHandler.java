@@ -17,4 +17,10 @@ public class ApiExceptionHandler {
     ResponseEntity<Void> handleNotContentException(NotContentException ex){
         return ResponseEntity.noContent().build();
     };
+
+    @ExceptionHandler(NotContentException.class)
+    ResponseEntity<Void> handleNotDuplicateNumberException(NotContentException ex){
+        return ResponseEntity.badRequest().build();
+    };
+
 }

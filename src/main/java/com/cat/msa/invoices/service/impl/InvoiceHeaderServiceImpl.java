@@ -2,6 +2,7 @@ package com.cat.msa.invoices.service.impl;
 
 import com.cat.msa.invoices.domain.InvoiceHeader;
 import com.cat.msa.invoices.exception.NotContentException;
+import com.cat.msa.invoices.exception.NotDuplicateNumberException;
 import com.cat.msa.invoices.repository.InvoiceHeaderRepository;
 import com.cat.msa.invoices.service.InvoiceHeaderService;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class InvoiceHeaderServiceImpl implements InvoiceHeaderService {
 
     @Override
     public InvoiceHeader createInvoiceHeader(InvoiceHeader invoiceHeader) {
+        InvoiceHeader duplicateInvoiceNumber = this.findByNumber(invoiceHeader.getNumber());
+        if(duplicateInvoiceNumber != null) throw new NotDuplicateNumberException("No se puede repetir el mismo numero de factura");
         invoiceHeader.calculateInvoiceAmount();
         return invoiceHeaderRepository.save(invoiceHeader);
     }
